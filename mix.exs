@@ -15,7 +15,7 @@ defmodule PostgRESTxn.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {PostgRESTxn.Application, []}
+      mod: {PostgRESTxn, []}
     ]
   end
 
@@ -25,7 +25,9 @@ defmodule PostgRESTxn.MixProject do
       {:bandit, "~> 1.11"},
       {:plug, "~> 1.19"},
       {:postgrex, "~> 0.22.2"},
-      {:jason, "~> 1.4"}
+      {:norm, "~> 0.13.1"},
+      {:joken, "~> 2.6"},
+      {:joken_jwks, "~> 1.7"}
     ]
   end
 end
