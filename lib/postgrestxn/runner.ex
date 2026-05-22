@@ -29,6 +29,7 @@ defmodule PostgRESTxn.Runner do
   """
   @spec run([map()], String.t(), map()) :: {:ok, results()} | {:error, error()}
   def run(ops, role, claims) when is_list(ops) and is_binary(role) and is_map(claims) do
+    # Transactional telemetry span:
     :telemetry.span([:postgrestxn, :txn], %{role: role, op_count: length(ops)}, fn ->
       result =
         Repo.transaction(fn txn ->
@@ -43,20 +44,14 @@ defmodule PostgRESTxn.Runner do
 
   # Set transaction-scoped session params before any user SQL runs.
   defp initialize_session(txn, role, claims) do
-    unless Validator.valid_ident?(role) do
-      Postgrex.rollback(
-        txn,
+    if not Validator.valid_ident?(role) do
+      Postgrex.rollback(txn,
         {:session_error,
-         %{
-           code: :invalid_role,
-           detail: "role #{inspect(role)} is not a valid Postgres identifier"
-         }}
-      )
+         %{code: :invalid_role, detail: "role #{inspect(role)} is not a valid Postgres identifier"}})
     end
 
     statement_timeout = Application.fetch_env!(:postgrestxn, :db_statement_timeout_ms)
     claims_json = claims |> JSON.encode!() |> String.replace("'", "''")
-
     search_path =
       Application.fetch_env!(:postgrestxn, :db_schemas)
       |> Enum.map_join(", ", &Query.quote_ident/1)
@@ -76,6 +71,7 @@ defmodule PostgRESTxn.Runner do
     Enum.reduce(ops, %{}, fn op, acc ->
       meta = %{op_id: op["id"], op: op["op"], table: op["table"]}
 
+      # Per-op telemetry span:
       :telemetry.span([:postgrestxn, :op], meta, fn ->
         try do
           resolved = Refs.substitute(op, acc)

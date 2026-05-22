@@ -52,6 +52,9 @@ unless config_env() == :test do
     # API server port.
     http_port: String.to_integer(System.get_env("HTTP_PORT") || "4000"),
 
+    # Admin server port (Prometheus /metrics).
+    admin_http_port: String.to_integer(System.get_env("ADMIN_HTTP_PORT") || "9568"),
+
     # Postgres connection string (required).
     database_url: System.fetch_env!("DATABASE_URL"),
 
@@ -59,7 +62,8 @@ unless config_env() == :test do
     pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
 
     # Statement timeout for Postgres queries (in milliseconds).
-    db_statement_timeout_ms: String.to_integer(System.get_env("DB_STATEMENT_TIMEOUT_MS") || "15000"),
+    db_statement_timeout_ms:
+      String.to_integer(System.get_env("DB_STATEMENT_TIMEOUT_MS") || "15000"),
 
     # JWT signing secret. Required to accept JWT-authenticated requests via static key.
     jwt_secret: jwt_secret,
@@ -74,7 +78,8 @@ unless config_env() == :test do
     jwt_oidc_issuer: jwt_oidc_issuer,
 
     # Polling interval for refreshing the JWKS cache (in milliseconds).
-    jwt_jwks_poll_interval_ms: String.to_integer(System.get_env("JWT_JWKS_POLL_INTERVAL_MS") || "60000"),
+    jwt_jwks_poll_interval_ms:
+      String.to_integer(System.get_env("JWT_JWKS_POLL_INTERVAL_MS") || "60000"),
 
     # JSONPath into the JWT claims that holds the Postgres role to switch to.
     # Examples: ".role" (top-level), ".app_metadata.role" (nested).

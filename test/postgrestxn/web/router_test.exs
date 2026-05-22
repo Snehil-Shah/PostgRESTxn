@@ -1,4 +1,4 @@
-defmodule PostgRESTxn.E2ETest do
+defmodule PostgRESTxn.Web.RouterTest do
   use ExUnit.Case, async: false
 
   @moduletag :integration
@@ -8,7 +8,7 @@ defmodule PostgRESTxn.E2ETest do
   import Plug.Conn
 
   alias PostgRESTxn.Repo
-  alias PostgRESTxn.Web.Endpoint
+  alias PostgRESTxn.Web.Router
 
   @secret "test-secret-32-bytes-minimum-for-hs256-hmac-key-padding"
 
@@ -205,7 +205,7 @@ defmodule PostgRESTxn.E2ETest do
     request(:post, "/", body: JSON.encode!(ops), auth: opts[:auth])
   end
 
-  # Endpoint driver.
+  # Router driver.
   defp request(method, path, opts \\ []) do
     body = opts[:body] || ""
     content_type = opts[:content_type] || "application/json"
@@ -216,7 +216,7 @@ defmodule PostgRESTxn.E2ETest do
 
     conn = if opts[:auth], do: put_req_header(conn, "authorization", opts[:auth]), else: conn
 
-    Endpoint.call(conn, [])
+    Router.call(conn, Router.init([]))
   end
 
   # Signs an HS256 JWT with the test secret.

@@ -17,7 +17,7 @@ defmodule PostgRESTxn.Web.Router do
   plug :match
   plug :dispatch
 
-  # Liveness probe.
+  # Health probe.
   get "/health" do
     case Repo.ping() do
       :ok ->

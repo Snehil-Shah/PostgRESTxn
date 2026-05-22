@@ -4,6 +4,7 @@ import Config
 config :postgrestxn,
   env: :test,
   http_port: 4001,
+  admin_http_port: 9569,
   database_url:
     System.get_env(
       "DATABASE_URL",

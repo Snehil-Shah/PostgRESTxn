@@ -17,7 +17,14 @@ defmodule PostgRESTxn.Supervisor do
     # JWKS child runs only when configured.
     jwks = if PostgRESTxn.Web.Jwks.configured?(), do: [{PostgRESTxn.Web.Jwks, []}], else: []
 
-    children = [PostgRESTxn.Repo] ++ jwks ++ [PostgRESTxn.Web.Endpoint]
+    children =
+      [
+        PostgRESTxn.Repo,
+        PostgRESTxn.Metrics
+      ] ++ jwks ++ [
+        PostgRESTxn.Web.Admin.Endpoint,
+        PostgRESTxn.Web.Endpoint
+      ]
 
     Supervisor.init(children, strategy: :one_for_one)
   end

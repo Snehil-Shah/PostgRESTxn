@@ -27,7 +27,10 @@ defmodule PostgRESTxn.MixProject do
       {:postgrex, "~> 0.22.2"},
       {:norm, "~> 0.13.1"},
       {:joken, "~> 2.6"},
-      {:joken_jwks, "~> 1.7"}
+      {:joken_jwks, "~> 1.7"},
+      {:telemetry, "~> 1.0"},
+      {:telemetry_metrics, "~> 1.0"},
+      {:telemetry_metrics_prometheus_core, "~> 1.2"}
     ]
   end
 end
