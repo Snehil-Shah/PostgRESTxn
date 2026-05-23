@@ -53,8 +53,8 @@ jobs:
           build-args: |
             APP_VERSION=${{ steps.version.outputs.version }}
           tags: |
-            ghcr.io/${{ github.repository_owner }}/postgrestxn:${{ steps.version.outputs.tag }}
-            ghcr.io/${{ github.repository_owner }}/postgrestxn:latest
+            ghcr.io/snehil-shah/postgrestxn:${{ steps.version.outputs.tag }}
+            ghcr.io/snehil-shah/postgrestxn:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/postgrestxn:${{ steps.version.outputs.tag }}
             ${{ secrets.DOCKERHUB_USERNAME }}/postgrestxn:latest
 
@@ -70,7 +70,7 @@ jobs:
           token: ${{ secrets.PAGES_DEPLOY_TOKEN }} # NOTE: Using PAT because bot commits don't trigger deployment workflows.
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: "3.13"
           cache: pip
