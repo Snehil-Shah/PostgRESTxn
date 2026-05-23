@@ -112,9 +112,9 @@ jobs:
       - name: Build release tarball
         env:
           APP_VERSION: ${{ needs.version.outputs.version }}
-        run: mix release --tar
+        run: mix release
 
-      - name: Attach tarball to GitHub Release
+      - name: Create GitHub Release
         uses: softprops/action-gh-release@v3
         with:
           files: _build/prod/postgrestxn-*.tar.gz

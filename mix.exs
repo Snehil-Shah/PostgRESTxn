@@ -17,7 +17,8 @@ defmodule PostgRESTxn.MixProject do
     [
       postgrestxn: [
         include_executables_for: [:unix],
-        applications: [runtime_tools: :permanent]
+        applications: [runtime_tools: :permanent],
+        steps: [:assemble, :tar]
       ]
     ]
   end
