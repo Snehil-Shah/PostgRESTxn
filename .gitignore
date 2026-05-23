@@ -24,3 +24,6 @@ postgrestxn-*.tar
 
 # Ignore the Elixir Language Server artifacts.
 .elixir_ls/
+
+# OS noise
+.DS_Store

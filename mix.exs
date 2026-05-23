@@ -41,7 +41,9 @@ defmodule PostgRESTxn.MixProject do
       {:joken_jwks, "~> 1.7"},
       {:telemetry, "~> 1.0"},
       {:telemetry_metrics, "~> 1.0"},
-      {:telemetry_metrics_prometheus_core, "~> 1.2"}
+      {:telemetry_metrics_prometheus_core, "~> 1.2"},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4", only: [:dev], runtime: false}
     ]
   end
 end
