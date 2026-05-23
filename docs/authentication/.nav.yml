@@ -1,0 +1,6 @@
+title: Authentication
+nav:
+  - Overview: overview.md
+  - Anon: anonymous.md
+  - JWT Secret: static-secret.md
+  - JWKS/OIDC: jwks.md

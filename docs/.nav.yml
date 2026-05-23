@@ -1,0 +1,9 @@
+nav:
+  - Home: index.md
+  - Getting Started: getting-started.md
+  - Concepts: concepts
+  - API Reference: api-reference
+  - Configuration: configuration.md
+  - Authentication: authentication
+  - Observability: observability.md
+  - Deployment: deployment.md
