@@ -121,7 +121,7 @@ defmodule PostgRESTxn.Web.RouterTest do
       conn = post_batch(ops)
 
       assert conn.status == 401
-      assert [%{"code" => "auth_required"}] = JSON.decode!(conn.resp_body)["data"]
+      assert %{"code" => "auth_required"} = JSON.decode!(conn.resp_body)["data"]
     end
   end
 
@@ -130,7 +130,7 @@ defmodule PostgRESTxn.Web.RouterTest do
       conn = request(:post, "/", body: ~s|{"not": "an_array"}|)
 
       assert conn.status == 400
-      assert [%{"code" => "body_invalid"}] = JSON.decode!(conn.resp_body)["data"]
+      assert %{"code" => "body_invalid"} = JSON.decode!(conn.resp_body)["data"]
     end
 
     test "op with invalid table identifier halts with 422 validation_error" do

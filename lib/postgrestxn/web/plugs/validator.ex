@@ -22,8 +22,8 @@ defmodule PostgRESTxn.Web.Plugs.Validator do
          :ok <- check_schemas(validated) do
       assign(conn, :ops, validated)
     else
-      {:error, :request, errors} ->
-        conn |> Response.request_error(errors) |> halt()
+      {:error, :request, error} ->
+        conn |> Response.request_error(error) |> halt()
 
       {:error, :schema_forbidden, errors_by_id} ->
         conn |> Response.validation_error(errors_by_id, 403) |> halt()
@@ -38,14 +38,14 @@ defmodule PostgRESTxn.Web.Plugs.Validator do
     case conn.body_params do
       %{"_json" => []} ->
         {:error, :request,
-         [%{code: :body_empty, detail: "request body must contain at least one op"}]}
+         %{code: :body_empty, detail: "request body must contain at least one op"}}
 
       %{"_json" => ops} when is_list(ops) ->
         {:ok, ops}
 
       _ ->
         {:error, :request,
-         [%{code: :body_invalid, detail: "request body must be a JSON array of ops"}]}
+         %{code: :body_invalid, detail: "request body must be a JSON array of ops"}}
     end
   end
 
@@ -54,10 +54,10 @@ defmodule PostgRESTxn.Web.Plugs.Validator do
     cond do
       Enum.any?(ops, fn op -> not is_map(op) or not is_binary(op["id"]) end) ->
         {:error, :request,
-         [%{code: :id_missing, detail: "every op must be a JSON object with a string `id` field"}]}
+         %{code: :id_missing, detail: "every op must be a JSON object with a string `id` field"}}
 
       has_duplicate_id?(ops) ->
-        {:error, :request, [%{code: :id_duplicate, detail: "op ids must be unique"}]}
+        {:error, :request, %{code: :id_duplicate, detail: "op ids must be unique"}}
 
       true ->
         :ok

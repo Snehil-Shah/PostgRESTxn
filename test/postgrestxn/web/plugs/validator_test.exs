@@ -131,6 +131,6 @@ defmodule PostgRESTxn.Web.Plugs.ValidatorTest do
 
     body = JSON.decode!(conn.resp_body)
     assert body["error"] == "request_error"
-    assert [%{"code" => ^expected_code}] = body["data"]
+    assert %{"code" => ^expected_code} = body["data"]
   end
 end

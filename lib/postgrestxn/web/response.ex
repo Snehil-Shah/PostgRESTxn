@@ -13,10 +13,10 @@ defmodule PostgRESTxn.Web.Response do
     json(conn, 200, %{error: nil, data: results})
   end
 
-  @doc "Request error with an array of error objects."
-  @spec request_error(Plug.Conn.t(), [map()], non_neg_integer()) :: Plug.Conn.t()
-  def request_error(conn, errors, status \\ 400) when is_list(errors) and is_integer(status) do
-    json(conn, status, %{error: "request_error", data: errors})
+  @doc "Request error with a single error object."
+  @spec request_error(Plug.Conn.t(), map(), non_neg_integer()) :: Plug.Conn.t()
+  def request_error(conn, error, status \\ 400) when is_map(error) and is_integer(status) do
+    json(conn, status, %{error: "request_error", data: error})
   end
 
   @doc "Validation error with the per-op list of error maps."

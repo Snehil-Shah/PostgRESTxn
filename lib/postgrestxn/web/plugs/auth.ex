@@ -22,7 +22,7 @@ defmodule PostgRESTxn.Web.Plugs.Auth do
 
       {:error, code, detail} ->
         conn
-        |> Response.request_error([%{code: code, detail: detail}], 401)
+        |> Response.request_error(%{code: code, detail: detail}, 401)
         |> halt()
     end
   end
