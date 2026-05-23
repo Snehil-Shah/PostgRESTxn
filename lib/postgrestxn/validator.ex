@@ -85,6 +85,11 @@ defmodule PostgRESTxn.Validator do
         if MapSet.member?(seen, id),
           do: [],
           else: [%{code: :ref_unknown, path: path, input: value, detail: detail({:ref_unknown, id})}]
+
+      # Malformed refs.
+      {:malformed, %{path: path, input: value}} ->
+        [%{code: :ref_malformed, path: path, input: value, detail: detail(:ref_malformed)}]
+
       # Literals are not refs, ignore.
       {:literal, _} ->
         []
@@ -123,6 +128,7 @@ defmodule PostgRESTxn.Validator do
   defp detail(:op_unknown_value), do: ~s|must be one of: "insert", "update", "delete", "select"|
   defp detail(:op_missing),       do: "missing required field"
   defp detail({:ref_unknown, id}), do: "$ref points at unknown op id #{inspect(id)}"
+  defp detail(:ref_malformed), do: "malformed $ reference. must be $op_id or $op_id.path (use $$ to escape a literal $)"
   defp detail(_), do: "invalid value"
 
   # Per-operation spec dispatchers:

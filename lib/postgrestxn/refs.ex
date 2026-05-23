@@ -27,6 +27,14 @@ defmodule PostgRESTxn.Refs do
           value: String.t()  # the unescaped value (one `$` stripped from the front)
         }
 
+  @typedoc """
+  A malformed ref attempt that starts with `$` but the grammar can't parse it.
+  """
+  @type malformed :: %{
+          path: segments(),     # path to the offending string within the source op
+          input: String.t()     # the offending value itself
+        }
+
   @doc """
   Substitutes all references in op with results.
   """
@@ -49,14 +57,20 @@ defmodule PostgRESTxn.Refs do
   Resolves to result id and path segments for valid refs,
   and returns unescaped literal for the `$$`-escaped ones.
   """
-  @spec parse(term()) :: {:ok, String.t(), segments()} | {:literal, String.t()} | :error
+  @spec parse(term()) ::
+          {:ok, String.t(), segments()}
+          | {:literal, String.t()}
+          | {:malformed, String.t()}
+          | :not_a_ref
   def parse("$$" <> rest), do: {:literal, "$" <> rest} # escape: strip one $
-  def parse("$." <> _), do: :error # empty id
-  def parse("$" <> rest) when rest != "" do
-    [id | segments] = String.split(rest, ".")
-    {:ok, id, Enum.map(segments, &parse_segment/1)}
+  def parse("$" <> rest = input) do
+    case String.split(rest, ".") do
+      [""] -> {:malformed, input}              # bare "$"
+      ["" | _] -> {:malformed, input}          # "$.foo", "$." - empty id segment
+      [id | segments] -> {:ok, id, Enum.map(segments, &parse_segment/1)}
+    end
   end
-  def parse(_), do: :error
+  def parse(_), do: :not_a_ref
 
   # Typecasts a path segment.
   defp parse_segment(seg) do
@@ -67,9 +81,9 @@ defmodule PostgRESTxn.Refs do
   end
 
   @doc """
-  Finds every ref and `$$`-escaped literal in op.
+  Finds every ref, `$$`-escaped literal, and malformed ref attempt in op.
   """
-  @spec find(map()) :: [{:ref, ref()} | {:literal, literal()}]
+  @spec find(map()) :: [{:ref, ref()} | {:literal, literal()} | {:malformed, malformed()}]
   def find(op) do
     Enum.flat_map(@ref_bearing_keys, fn key ->
       case op[key] do
@@ -79,12 +93,13 @@ defmodule PostgRESTxn.Refs do
     end)
   end
 
-  # Recursively searches for refs/literals within value, accumulating path segments.
+  # Recursively searches for refs/literals/malformed within value, accumulating path segments.
   defp find_in(value, path) when is_binary(value) do
     case parse(value) do
       {:ok, id, segments} -> [{:ref, %{path: path, input: value, id: id, segments: segments}}]
       {:literal, lit} -> [{:literal, %{path: path, value: lit}}]
-      :error -> []
+      {:malformed, input} -> [{:malformed, %{path: path, input: input}}]
+      :not_a_ref -> []
     end
   end
   defp find_in(list, path) when is_list(list) do

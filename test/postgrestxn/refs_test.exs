@@ -43,28 +43,34 @@ defmodule PostgRESTxn.RefsTest do
     end
   end
 
-  describe "parse/1 - error" do
+  describe "parse/1 - not a ref" do
     test "plain string with no $" do
-      assert Refs.parse("hello") == :error
+      assert Refs.parse("hello") == :not_a_ref
     end
 
     test "empty string" do
-      assert Refs.parse("") == :error
-    end
-
-    test "just $ (no id)" do
-      assert Refs.parse("$") == :error
-    end
-
-    test "$ followed by dot (empty id)" do
-      assert Refs.parse("$.foo") == :error
+      assert Refs.parse("") == :not_a_ref
     end
 
     test "non-string inputs" do
-      assert Refs.parse(42) == :error
-      assert Refs.parse(nil) == :error
-      assert Refs.parse(true) == :error
-      assert Refs.parse(%{}) == :error
+      assert Refs.parse(42) == :not_a_ref
+      assert Refs.parse(nil) == :not_a_ref
+      assert Refs.parse(true) == :not_a_ref
+      assert Refs.parse(%{}) == :not_a_ref
+    end
+  end
+
+  describe "parse/1 - malformed ref attempts" do
+    test "bare $ (no id at all)" do
+      assert Refs.parse("$") == {:malformed, "$"}
+    end
+
+    test "$ followed by dot only" do
+      assert Refs.parse("$.") == {:malformed, "$."}
+    end
+
+    test "$ followed by dot and field (empty id)" do
+      assert Refs.parse("$.foo") == {:malformed, "$.foo"}
     end
   end
 
@@ -134,6 +140,24 @@ defmodule PostgRESTxn.RefsTest do
       }
 
       assert Refs.find(op) == []
+    end
+  end
+
+  describe "find/1 - malformed refs" do
+    test "$.field is collected as malformed" do
+      op = %{"op" => "insert", "values" => [%{"col" => "$.field"}]}
+
+      assert [{:malformed, m}] = Refs.find(op)
+      assert m.input == "$.field"
+      assert m.path == ["values", 0, "col"]
+    end
+
+    test "bare $ is collected as malformed" do
+      op = %{"op" => "update", "set" => %{"col" => "$"}}
+
+      assert [{:malformed, m}] = Refs.find(op)
+      assert m.input == "$"
+      assert m.path == ["set", "col"]
     end
   end
 

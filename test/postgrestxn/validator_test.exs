@@ -489,6 +489,36 @@ defmodule PostgRESTxn.ValidatorTest do
 
       assert {:ok, ^ops} = Validator.validate(ops)
     end
+
+    test "malformed ref `$.field` (no op id) is rejected" do
+      ops = [
+        %{
+          "id" => "x",
+          "op" => "insert",
+          "table" => "users",
+          "values" => [%{"a" => "$.field"}]
+        }
+      ]
+
+      assert {:error, %{"x" => [err]}} = Validator.validate(ops)
+      assert %{code: :ref_malformed, input: "$.field"} = err
+      assert err.path == ["values", 0, "a"]
+    end
+
+    test "malformed ref bare `$` is rejected" do
+      ops = [
+        %{
+          "id" => "x",
+          "op" => "update",
+          "table" => "users",
+          "set" => %{"col" => "$"},
+          "where" => %{"id" => %{"eq" => 1}}
+        }
+      ]
+
+      assert {:error, %{"x" => [err]}} = Validator.validate(ops)
+      assert %{code: :ref_malformed, input: "$"} = err
+    end
   end
 
   describe "validate/1 - multi-error accumulation" do
