@@ -12,6 +12,17 @@ defmodule PostgRESTxn.Web.RouterTest do
 
   @secret "test-secret-32-bytes-minimum-for-hs256-hmac-key-padding"
 
+  # App env keys this test mutates.
+  @managed_keys [
+    :anon_role,
+    :jwt_secret,
+    :jwt_algo,
+    :jwt_jwks_url,
+    :jwt_oidc_issuer,
+    :jwt_role_claim_key,
+    :jwt_aud
+  ]
+
   # A comprehensive happy-path.
   @happy_ops [
     %{
@@ -68,6 +79,13 @@ defmodule PostgRESTxn.Web.RouterTest do
 
     Postgrex.query!(Repo, "GRANT SELECT, INSERT, UPDATE, DELETE ON users TO web_anon", [])
     Postgrex.query!(Repo, "GRANT USAGE, SELECT ON SEQUENCE users_id_seq TO web_anon", [])
+
+    # NOTE: The test mutates global envs, hence saving and restoring at module exit.
+    originals = Map.new(@managed_keys, &{&1, Application.get_env(:postgrestxn, &1)})
+
+    on_exit(fn ->
+      Enum.each(originals, fn {k, v} -> Application.put_env(:postgrestxn, k, v) end)
+    end)
 
     :ok
   end
