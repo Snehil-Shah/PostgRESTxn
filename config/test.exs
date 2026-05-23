@@ -8,7 +8,7 @@ config :postgrestxn,
   database_url:
     System.get_env(
       "DATABASE_URL",
-      "postgres://postgres:postgres@localhost:5432/postgrestxn_test"
+      "postgres://postgres:postgres@localhost:5432/postgrestxn"
     ),
   pool_size: 2,
   db_statement_timeout_ms: 5_000,
