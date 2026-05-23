@@ -26,6 +26,10 @@ RUN mix deps.compile
 COPY config config
 COPY lib lib
 
+# Sets the project version.
+ARG APP_VERSION
+ENV APP_VERSION=${APP_VERSION}
+
 RUN mix compile
 RUN mix release
 

@@ -4,7 +4,7 @@ defmodule PostgRESTxn.MixProject do
   def project do
     [
       app: :postgrestxn,
-      version: "0.1.0",
+      version: System.get_env("APP_VERSION") || "0.0.0",  # NOTE: Specify version when producing release builds.
       elixir: "~> 1.19",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
