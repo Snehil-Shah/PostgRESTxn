@@ -50,7 +50,7 @@ defmodule PostgRESTxn.Web.RouterTest do
   setup_all do
     start_supervised!(Repo)
 
-    # Setup (test table and an anon role):
+    # Setup:
     Postgrex.query!(Repo, """
     DO $$ BEGIN
       CREATE ROLE web_anon NOLOGIN;

@@ -5,10 +5,17 @@ defmodule PostgRESTxn.RunnerTest do
 
   alias PostgRESTxn.{Repo, Runner}
 
-  setup do
+  setup_all do
     start_supervised!(Repo)
 
-    # Setup (test table and an anon role):
+    # Setup:
+    Postgrex.query!(Repo, """
+    DO $$ BEGIN
+      CREATE ROLE web_anon NOLOGIN;
+    EXCEPTION WHEN duplicate_object THEN NULL;
+    END $$
+    """, [])
+
     Postgrex.query!(Repo, """
     CREATE TABLE IF NOT EXISTS users (
       id SERIAL PRIMARY KEY,
@@ -20,8 +27,11 @@ defmodule PostgRESTxn.RunnerTest do
     Postgrex.query!(Repo, "GRANT SELECT, INSERT, UPDATE, DELETE ON users TO web_anon", [])
     Postgrex.query!(Repo, "GRANT USAGE, SELECT ON SEQUENCE users_id_seq TO web_anon", [])
 
-    Postgrex.query!(Repo, "TRUNCATE users RESTART IDENTITY CASCADE", [])
+    :ok
+  end
 
+  setup do
+    Postgrex.query!(Repo, "TRUNCATE users RESTART IDENTITY CASCADE", [])
     :ok
   end
 

@@ -83,7 +83,7 @@ defmodule PostgRESTxn.Web.Admin.RouterTest do
 
       # Password must be masked:
       assert body["database_url"] =~
-               ~r{^postgres://postgres:\[REDACTED\]@localhost:5432/postgrestxn_test}
+               ~r{^postgres://postgres:\[REDACTED\]@localhost:5432/postgrestxn}
 
       assert body["jwt_secret"] == nil
 
