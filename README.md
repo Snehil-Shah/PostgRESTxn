@@ -16,7 +16,7 @@ An overview of the batteries included (for now):
 - **Fully stateless**: Horizontally scale as you wish.
 - **Observability**: An Admin API serving various Prometheus metrics around performance.
 
-Find the full documentation [here](https://snehil-shah.github.io/postgrestxn/).
+Find the full documentation [here](https://snehil-shah.github.io/PostgRESTxn/).
 
 ## Quick start
 
@@ -72,7 +72,7 @@ Returns:
 }
 ```
 
-For setting up and understanding RLS-aware roles, JWT auth, DSL reference, and everything else, read the documentation [here](https://snehil-shah.github.io/postgrestxn/).
+For setting up and understanding RLS-aware roles, JWT auth, DSL reference, and everything else, read the documentation [here](https://snehil-shah.github.io/PostgRESTxn/).
 
 Once you are done testing it, the same semantics can be easily deployed to your k8s cluster, VM, serverless, or any other way you would like to run this in production.
 

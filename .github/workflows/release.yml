@@ -136,4 +136,4 @@ jobs:
               docker pull snehilshah/postgrestxn:${{ needs.version.outputs.tag }}
               ```
 
-            Find the docs [here](https://snehil-shah.github.io/postgrestxn/${{ needs.version.outputs.tag }}/).
+            Find the docs [here](https://snehil-shah.github.io/PostgRESTxn/${{ needs.version.outputs.tag }}/).
