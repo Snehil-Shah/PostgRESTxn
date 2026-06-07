@@ -1,59 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/configuration/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/configuration/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/deployment/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/deployment/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/getting-started/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/getting-started/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/observability/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/observability/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/api-reference/request/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/api-reference/request/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/api-reference/response/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/api-reference/response/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/authentication/anonymous/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/authentication/anonymous/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/authentication/jwks/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/authentication/jwks/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/authentication/overview/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/authentication/overview/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/authentication/static-secret/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/authentication/static-secret/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/concepts/filters/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/concepts/filters/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/concepts/operations/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/concepts/operations/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
     <url>
-         <loc>https://snehil-shah.github.io/postgrestxn/v0.1.2/concepts/references/</loc>
-         <lastmod>2026-05-23</lastmod>
+         <loc>https://snehil-shah.github.io/PostgRESTxn/v0.1.2/concepts/references/</loc>
+         <lastmod>2026-06-07</lastmod>
     </url>
 </urlset>
