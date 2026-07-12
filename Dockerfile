@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.6
+# syntax=docker/dockerfile:1
 
 ARG BUILDER_IMAGE="hexpm/elixir:1.19.5-erlang-26.2.5.2-debian-bookworm-20260518-slim"
 ARG RUNNER_IMAGE="debian:bookworm-slim"
