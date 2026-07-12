@@ -38,6 +38,8 @@ jobs:
       sign: false
       build-args: |
         APP_VERSION=${{ needs.version.outputs.version }}
+      annotations: |
+        index:org.opencontainers.image.description=The missing /txn endpoint for PostgREST.
       meta-images: |
         ghcr.io/snehil-shah/postgrestxn
         snehilshah/postgrestxn
